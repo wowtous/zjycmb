@@ -39,8 +39,9 @@ public class VerifyCodeController {
 	
 	@RequestMapping(value = "/decrypt", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean Decrypt(@RequestParam String url) {
-		String keypath = System.getProperty("user.dir")+"/public.key";
-		return mc.isVerifySign(url, keypath);
+	public String Decrypt(@RequestParam String url) {
+//		String keypath = System.getProperty("user.dir")+"/public.key";
+		String keypath = VerifyCodeController.class.getResource("/").getPath()+"public.key";
+		return mc.isVerifySign(url, keypath)+"";
 	}
 }

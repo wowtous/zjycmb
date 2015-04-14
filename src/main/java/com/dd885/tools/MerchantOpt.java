@@ -16,11 +16,15 @@ public class MerchantOpt implements Merchantable{
 		try {
 			code = MerchantCode.genMerchantCode(key, strDate,strBranchID, strCono, strBillNo,strAmount, strMerchantPara, strMerchantUrl,strPayerID, strPayeeID, strClientIP,strGoodsType, strReserved);
 		} catch (Exception e) {
-			System.err.println("传入的参数不正确，生成校验码失败,请核对参数值。  -->  "+ System.currentTimeMillis());
+//			System.err.println("传入的参数不正确，生成校验码失败,请核对参数值。  -->  "+ System.currentTimeMillis());
+			e.printStackTrace();
 		}
 		return code;
 	}
 
+	/**
+	 * 判断返回的URL是否是从银行返回
+	 */
 	public boolean isVerifySign(String url, String keypath) {
 		boolean bRet =false;
 		if (StringUtils.isNotNone(url)) {
@@ -29,9 +33,10 @@ public class MerchantOpt implements Merchantable{
 
 	            byte[] baSig = url.getBytes("GB2312");
 				bRet = pay.checkInfoFromBank(baSig);
-				System.out.println("checkInfoFromBank: "+bRet);
+//				System.out.println("checkInfoFromBank: "+bRet);
 			} catch(Exception e) {
-				System.out.println("new netpayment object failed: "+e.getMessage());
+				e.printStackTrace();
+//				System.out.println("new netpayment object failed: "+e.getMessage());
 			}
 		}
 		return bRet;
